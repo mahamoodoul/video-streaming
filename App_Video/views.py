@@ -4,7 +4,7 @@ from App_Video.models import Video, Category, Feedback
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from App_Blog.forms import CommentForm
+from App_Video.forms import CommentForm
 import uuid
 # Create your views here.
 
@@ -31,3 +31,18 @@ class VideoList(ListView):
     context_object_name = 'videos'
     model = Video
     template_name = 'App_Video/video_list.html'
+
+
+@login_required
+def video_details(request, slug ):
+    video = Video.objects.get(slug=slug)
+    comment_form = CommentForm()
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.video = video
+            comment.save()
+            return HttpResponseRedirect(reverse('App_Video:video_details', kwargs={'slug':slug}))
+    return render(request, 'App_Video/video_details.html', context={'video':video, 'comment_form':comment_form })

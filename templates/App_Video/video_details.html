@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} {{video.video_title}} {% endblock %}
+{% block body_block %}
+<div class="row">
+  <div class="col-sm-6">
+    <h2>{{video.video_title}}</h2>
+    <h4>Video is uploaded by : @{{video.author}}</h4>
+    <i><h6>Published On: {{video.publish_date}}</h6></i>
+    <!-- <i><h6>Updated On: {{video.update_date}}</h6></i> -->
+      <h6>{{video.video_description}}</h6>
+  </div>
+  <div class="col-sm-6">
+    <iframe width="420" height="315" src="{{video.video_link}}"> </iframe>
+  </div>
+  <hr>
+</div>
+
+<br>
+ <br>
+<div class="row">
+    <div class="col-sm-6">
+      <hr>
+      <h5>Comments:</h5>
+      {% for comment in video.video_comment.all %}
+      <p><a href="#">@{{comment.user}}</a> {{comment.comment}}<br><h6>{{comment.comment_date}}</h6></p>
+      {% endfor %}
+    </div>
+    <div class="col-sm-6">
+      <form method="POST">
+        {{ comment_form|crispy }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+      </form>
+    </div>
+  <br>
+  <br>
+
+  {% endblock %}

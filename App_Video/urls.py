@@ -7,7 +7,7 @@ urlpatterns = [
 
     path('',views.VideoList.as_view(), name='video_list'),
     path('upload_video/', views.PublishVideo.as_view(), name='publish_video'),
-    # path(r'^?P<slug>[\w-]', views.blog_details, name='blog_details'),
+    path(r'^?P<slug>[\w-]', views.video_details, name='video_details'),
     # path('liked/<pk>/', views.liked, name='liked_post'),
     # path('unliked/<pk>/', views.unliked, name='unliked_post'),
     # path('my-blogs/', views.MyBlogs.as_view(), name='my_blogs'),
