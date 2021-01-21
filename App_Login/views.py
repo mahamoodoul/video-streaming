@@ -39,7 +39,7 @@ def login_page(request):
 @login_required
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect(reverse('/'))
+    return HttpResponseRedirect(reverse('index'))
 
 
 @login_required

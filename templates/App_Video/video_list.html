@@ -1,22 +1,69 @@
 {% extends 'base.html' %}
 {% block title_block %} Home {% endblock %}
 {% block body_block %}
-{% for video in videos %}
-
-<h3> <a href="{% url 'App_Video:video_details' video.slug %}">{{video.vidoe_title}}</a> </h3>
-<h6><i>{{video.video_category}}</i></h6>
-<div class="row">
-  <div class="col-sm-4">
-    <iframe width="420" height="315" src="{{video.video_link}}"> </iframe>
-  </div>
-  <div class="col-sm-8">
 
 
-  </div>
-</div>
+
+{% if catgory_wise %}
+
+      {% for cat_video in cat_wise_videos %}
+      <h3> <a href="{% url 'App_Video:video_details' cat_video.slug %}">{{cat_video.vidoe_title}}</a> </h3>
+      <h6><i>{{cat_video.video_category}}</i></h6>
+      <div class="row">
+        <div class="col-sm-4">
+          <iframe width="420" height="315" src="{{cat_video.video_link}}"> </iframe>
+        </div>
+        <div class="col-sm-8">
 
 
-<hr>
-{% endfor %}
-aaaaaaaaaaaaa
+        </div>
+      </div>
+
+
+      <hr>
+      {% endfor %}
+
+{% else %}
+
+
+      {% if search %}
+      <h6>Your Serach text are : {{search}}</h6>
+      <hr>
+      <hr>
+          {% for result in results %}
+
+          <h3> <a href="{% url 'App_Video:video_details' result.slug %}">{{result.vidoe_title}}</a> </h3>
+          <h6><i>{{result.video_category}}</i></h6>
+          <div class="row">
+            <div class="col-sm-4">
+              <iframe width="420" height="315" src="{{result.video_link}}"> </iframe>
+            </div>
+            <div class="col-sm-8">
+
+
+            </div>
+          </div>
+
+
+          <hr>
+          {% endfor %}
+      {% else %}
+          {% for video in videos %}
+          <h3> <a href="{% url 'App_Video:video_details' video.slug %}">{{video.vidoe_title}}</a> </h3>
+          <h6><i>{{video.video_category}}</i></h6>
+          <div class="row">
+            <div class="col-sm-4">
+              <iframe width="420" height="315" src="{{video.video_link}}"> </iframe>
+            </div>
+            <div class="col-sm-8">
+
+
+            </div>
+          </div>
+
+
+          <hr>
+          {% endfor %}
+      {% endif %}
+{% endif %}
 {% endblock %}
